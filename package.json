@@ -1,0 +1,21 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "main": "index.js",
+  "dependencies": {
+    "babelify": "^6.3.0",
+    "react": "^0.14.0-rc1",
+    "react-dom": "^0.14.0-rc1",
+    "watchify": "^3.4.0"
+  },
+  "scripts": {
+    "start": "watchify src/** -v -t babelify --modules common -o bundle.js"
+  }
+}
