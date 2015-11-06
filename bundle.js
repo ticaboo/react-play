@@ -19026,101 +19026,63 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-
-/*
-  a + & - button which change count.
-  count should be displayed by counter component.
-  how react components talk to each other? composing react components
-
-*/
+var TodoList = require('./TodoList');
 
 module.exports = (function (_React$Component) {
-  _inherits(CountClicker, _React$Component);
+	_inherits(TodoApp, _React$Component);
 
-  function CountClicker() {
-    _classCallCheck(this, CountClicker);
+	function TodoApp(props) {
+		_classCallCheck(this, TodoApp);
 
-    _get(Object.getPrototypeOf(CountClicker.prototype), 'constructor', this).apply(this, arguments);
-  }
+		_get(Object.getPrototypeOf(TodoApp.prototype), 'constructor', this).call(this, props);
+		this.state = {
+			items: [],
+			text: '' };
+	}
 
-  _createClass(CountClicker, [{
-    key: 'decrement',
-    value: function decrement() {
-      this.props.count -= 1;
-    }
-  }, {
-    key: 'increment',
-    value: function increment() {
-      this.props.count += 1;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'input',
-          { type: 'button', onClick: this.decrement },
-          '-'
-        ),
-        React.createElement(
-          'input',
-          { type: 'button', onClick: this.increment },
-          '-'
-        )
-      );
-    }
-  }]);
+	_createClass(TodoApp, [{
+		key: 'onChange',
+		value: function onChange(e) {
+			this.setState({ text: e.target.value });
+		}
+	}, {
+		key: 'handleSubmit',
+		value: function handleSubmit(e) {
+			e.preventDefault();
+			var nextItems = this.state.items.concat([this.state.text]);
+			var nextText = '';
+			this.setState({ items: nextItems, text: nextText });
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h3',
+					null,
+					'TODO'
+				),
+				React.createElement(TodoList, { items: this.state.items }),
+				React.createElement(
+					'form',
+					{ onSubmit: this.handleSubmit },
+					React.createElement('input', { onChange: this.onChange, value: this.state.text }),
+					React.createElement(
+						'button',
+						null,
+						'Add #' + (this.state.items.length + 1)
+					)
+				)
+			);
+		}
+	}]);
 
-  return CountClicker;
+	return TodoApp;
 })(React.Component);
 
-},{"react":157,"react-dom":1}],160:[function(require,module,exports){
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Counter = require('./counter.js');
-var CountClicker = require('./count-clicker.js');
-
-module.exports = (function (_React$Component) {
-  _inherits(CounterApp, _React$Component);
-
-  function CounterApp() {
-    _classCallCheck(this, CounterApp);
-
-    _get(Object.getPrototypeOf(CounterApp.prototype), 'constructor', this).apply(this, arguments);
-  }
-
-  _createClass(CounterApp, [{
-    key: 'render',
-    value: function render() {
-      var count = this.props.count + 1;
-
-      var message = 'count: ' + count;
-
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(Counter, { count: '1' }),
-        React.createElement(CountClicker, null)
-      );
-    }
-  }]);
-
-  return CounterApp;
-})(React.Component);
-
-},{"./count-clicker.js":159,"./counter.js":161,"react":157,"react-dom":1}],161:[function(require,module,exports){
+},{"./TodoList":160,"react":157,"react-dom":1}],160:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -19135,20 +19097,88 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 module.exports = (function (_React$Component) {
-  _inherits(Counter, _React$Component);
+	_inherits(TodoList, _React$Component);
 
-  function Counter() {
-    _classCallCheck(this, Counter);
+	function TodoList() {
+		_classCallCheck(this, TodoList);
 
-    _get(Object.getPrototypeOf(Counter.prototype), 'constructor', this).apply(this, arguments);
+		_get(Object.getPrototypeOf(TodoList.prototype), 'constructor', this).apply(this, arguments);
+	}
+
+	_createClass(TodoList, [{
+		key: 'render',
+		value: function render() {
+			console.log('list render()');
+			var createItem = function createItem(itemText, index) {
+
+				return React.createElement(
+					'li',
+					{ key: index + itemText },
+					itemText
+				);
+			};
+
+			return React.createElement(
+				'ul',
+				null,
+				this.props.items.map(createItem)
+			);
+		}
+	}]);
+
+	return TodoList;
+})(React.Component);
+
+},{"react":157,"react-dom":1}],161:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+//var TodoList = require( './TodoList');
+var TodoApp = require('./TodoApp.js');
+
+console.log('main.js');
+
+ReactDOM.render(React.createElement(TodoApp, null), document.querySelector('#app'));
+
+var Simples = require('./simples');
+
+//	ReactDOM.render(<Simples />, document.querySelector('#app'));
+
+console.log('main.js loaded');
+
+},{"./TodoApp.js":159,"./simples":162,"react":157,"react-dom":1}],162:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+module.exports = (function (_React$Component) {
+  _inherits(Simples, _React$Component);
+
+  function Simples(props) {
+    _classCallCheck(this, Simples);
+
+    _get(Object.getPrototypeOf(Simples.prototype), 'constructor', this).call(this, props);
+    this.state = {
+      items: [],
+      text: '' };
   }
 
-  _createClass(Counter, [{
+  _createClass(Simples, [{
     key: 'render',
     value: function render() {
-      var count = this.props.count + 1;
 
-      var message = 'count: ' + count;
+      var message = 'Simples - hello';
 
       return React.createElement(
         'p',
@@ -19158,61 +19188,7 @@ module.exports = (function (_React$Component) {
     }
   }]);
 
-  return Counter;
+  return Simples;
 })(React.Component);
 
-},{"react":157,"react-dom":1}],162:[function(require,module,exports){
-'use strict';
-
-var React = require('react');
-var ReactDOM = require('react-dom');
-
-var Timer = require('./timer.js');
-
-var start = new Date().getTime();
-setInterval(function () {
-  ReactDOM.render(React.createElement(Timer, { elapsed: new Date().getTime() - start }), document.getElementById('container'));
-}, 50);
-
-},{"./timer.js":163,"react":157,"react-dom":1}],163:[function(require,module,exports){
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = require('react');
-var ReactDOM = require('react-dom');
-
-module.exports = (function (_React$Component) {
-  _inherits(Timer, _React$Component);
-
-  function Timer() {
-    _classCallCheck(this, Timer);
-
-    _get(Object.getPrototypeOf(Timer.prototype), 'constructor', this).apply(this, arguments);
-  }
-
-  _createClass(Timer, [{
-    key: 'render',
-    value: function render() {
-      var elapsed = Math.round(this.props.elapsed / 100);
-      var seconds = elapsed / 10 + (elapsed % 10 ? '' : '.0');
-      var message = 'React has been successfully running for ' + seconds + ' seconds.';
-
-      return React.createElement(
-        'p',
-        null,
-        message
-      );
-    }
-  }]);
-
-  return Timer;
-})(React.Component);
-
-},{"react":157,"react-dom":1}]},{},[159,160,161,162,163]);
+},{"react":157,"react-dom":1}]},{},[159,160,161,162]);

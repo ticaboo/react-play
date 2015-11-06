@@ -1,12 +1,17 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Timer = require('./timer.js');
+//var TodoList = require( './TodoList');
+var TodoApp = require ('./TodoApp.js');
 
-var start = new Date().getTime();
-setInterval(() => {
-  ReactDOM.render(
-    <Timer elapsed={new Date().getTime() - start} />,
-    document.getElementById('container')
-  );
-}, 50);
+	console.log('main.js');
+
+		ReactDOM.render(<TodoApp />, document.querySelector('#app'));
+
+
+var Simples = require('./simples');
+
+	//	ReactDOM.render(<Simples />, document.querySelector('#app'));
+
+
+	console.log('main.js loaded');
