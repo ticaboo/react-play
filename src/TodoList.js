@@ -14,7 +14,7 @@ var TodoList = React.createClass({
 		};
 		
 
-		return <ul>{this.props.items.map(createItem)}</ul>;
+		return <ol>{this.props.items.map(createItem)}</ol>;
 	}
 
 });

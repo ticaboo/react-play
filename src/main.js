@@ -1,8 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var TodoList = require('./TodoList');
-var TodoApp = require('./TodoApp');
+var TodoList = require('./todoList');
+var TodoApp = require('./todoApp');
 
 /*
 var Timer = require('./timer.js');

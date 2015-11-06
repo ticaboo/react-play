@@ -24,6 +24,14 @@ var TodoApp = React.createClass({
 		this.setState({items: nextItems, text: nextText});
 	},
 
+	deleteItem: function(e) {
+		e.preventDefault();
+		this.state.items.pop();
+		this.setState({
+			items: this.state.items
+		});
+	},
+
 
 	render: function() {
 		return (
@@ -33,9 +41,10 @@ var TodoApp = React.createClass({
 
 				<TodoList items={this.state.items} />
 
-				<form onSubmit={this.handleSubmit}>
+				<form>
 					<input onChange={this.onChange} value={this.state.text} />
-					<button>{'Add #' + (this.state.items.length + 1)}</button>
+					<button onClick={this.handleSubmit}>{'Add item #' + (this.state.items.length + 1)}</button>
+					<button onClick={this.deleteItem}>{'Delete item #' + (this.state.items.length) }</button>
 				</form>
 
 			</div>

@@ -19041,6 +19041,14 @@ var TodoApp = React.createClass({
 		this.setState({ items: nextItems, text: nextText });
 	},
 
+	deleteItem: function deleteItem(e) {
+		e.preventDefault();
+		this.state.items.pop();
+		this.setState({
+			items: this.state.items
+		});
+	},
+
 	render: function render() {
 		return React.createElement(
 			'div',
@@ -19053,12 +19061,17 @@ var TodoApp = React.createClass({
 			React.createElement(TodoList, { items: this.state.items }),
 			React.createElement(
 				'form',
-				{ onSubmit: this.handleSubmit },
+				null,
 				React.createElement('input', { onChange: this.onChange, value: this.state.text }),
 				React.createElement(
 					'button',
-					null,
-					'Add #' + (this.state.items.length + 1)
+					{ onClick: this.handleSubmit },
+					'Add item #' + (this.state.items.length + 1)
+				),
+				React.createElement(
+					'button',
+					{ onClick: this.deleteItem },
+					'Delete item #' + this.state.items.length
 				)
 			)
 		);
@@ -19089,7 +19102,7 @@ var TodoList = React.createClass({
 		};
 
 		return React.createElement(
-			'ul',
+			'ol',
 			null,
 			this.props.items.map(createItem)
 		);
@@ -19253,8 +19266,8 @@ module.exports = (function (_React$Component) {
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var TodoList = require('./TodoList');
-var TodoApp = require('./TodoApp');
+var TodoList = require('./todoList');
+var TodoApp = require('./todoApp');
 
 /*
 var Timer = require('./timer.js');
@@ -19270,7 +19283,7 @@ setInterval(() => {
 
 ReactDOM.render(React.createElement(TodoApp, null), document.querySelector('#app'));
 
-},{"./TodoApp":159,"./TodoList":160,"react":157,"react-dom":1}],165:[function(require,module,exports){
+},{"./todoApp":166,"./todoList":167,"react":157,"react-dom":1}],165:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -19311,4 +19324,103 @@ module.exports = (function (_React$Component) {
   return Timer;
 })(React.Component);
 
-},{"react":157,"react-dom":1}]},{},[159,160,161,162,163,164,165]);
+},{"react":157,"react-dom":1}],166:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TodoList = require('./TodoList');
+
+var TodoApp = React.createClass({
+	displayName: 'TodoApp',
+
+	getInitialState: function getInitialState() {
+		return {
+			items: [],
+			text: ''
+		};
+	},
+
+	onChange: function onChange(e) {
+		this.setState({ text: e.target.value });
+	},
+
+	handleSubmit: function handleSubmit(e) {
+		e.preventDefault();
+		var nextItems = this.state.items.concat([this.state.text]);
+		var nextText = '';
+		this.setState({ items: nextItems, text: nextText });
+	},
+
+	deleteItem: function deleteItem(e) {
+		e.preventDefault();
+		this.state.items.pop();
+		this.setState({
+			items: this.state.items
+		});
+	},
+
+	render: function render() {
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'h3',
+				null,
+				'TODO'
+			),
+			React.createElement(TodoList, { items: this.state.items }),
+			React.createElement(
+				'form',
+				null,
+				React.createElement('input', { onChange: this.onChange, value: this.state.text }),
+				React.createElement(
+					'button',
+					{ onClick: this.handleSubmit },
+					'Add item #' + (this.state.items.length + 1)
+				),
+				React.createElement(
+					'button',
+					{ onClick: this.deleteItem },
+					'Delete item #' + this.state.items.length
+				)
+			)
+		);
+	}
+});
+
+module.exports = TodoApp;
+
+},{"./TodoList":160,"react":157,"react-dom":1}],167:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+var TodoApp = require('./TodoApp');
+
+var TodoList = React.createClass({
+	displayName: 'TodoList',
+
+	render: function render() {
+
+		var createItem = function createItem(itemText, index) {
+
+			return React.createElement(
+				'li',
+				{ key: index + itemText },
+				itemText
+			);
+		};
+
+		return React.createElement(
+			'ol',
+			null,
+			this.props.items.map(createItem)
+		);
+	}
+
+});
+
+module.exports = TodoList;
+
+},{"./TodoApp":159,"react":157,"react-dom":1}]},{},[159,160,161,162,163,164,165]);
